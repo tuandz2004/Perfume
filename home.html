@@ -1,0 +1,56 @@
+<d
+                iv class="jumbotron p-3 " style="height: 200px; background-color: antiquewhite;">
+                    <h1 class="display-4">Chào mừng đến với cửa hàng nước hoa!</h1>
+                    <p class="lead">Chúng tôi cung cấp các loại nước hoa 
+                        <span class="badge badge-success">chất lượng cao</span> từ các thương hiệu
+                        <span class="badge badge-warning">nổi tiếng</span> .
+                    </p>
+                    <p>Hãy khám phá <span class="badge badge-danger">bộ sưu tập</span> 
+                        nước hoa của chúng tôi và tìm kiếm mùi hương yêu thích của bạn.</p>
+                    <a class="btn btn-primary btn-lg" style="background-color:white ;color: black;" href="#!/sanpham"
+                        role="button" >Khám phá ngay</a>
+
+                </d>
+                <hr>
+                <marquee behavior="" direction="">CHÀO MỪNG ĐẾN VỚI TUANDUBAI SHOP</marquee>
+                <hr>
+                <img src="image/logo3.png" alt="" width="100%" ;>
+                <hr>
+                <div class="custom-border" style="border: 5px solid white;padding: 20px;">
+                    <div >
+                        <div ng-controller="productCtrl">
+                            <div class="container">
+                                <div class="row text-center">
+                                    <div class="col-sm-4" ng-repeat="p in list_sanpham">
+                                        <div class="card">
+
+                                            <div class="card-header">
+                                                {{p.name}}
+                                            </div>
+                                            <div class="card-body" ng-click="selectProduct(p, $index)">
+                                                <a href="ProductDetailsPopMart.html?index=${{selectedProductIndex}}"><img
+                                                        class="card-img-top" src="image/{{p.id}}.jpg" alt="Card image"
+                                                        width="220px" height="280px"></a>
+
+                                            </div>
+                                            <div class="card-footer">
+                                                {{p.price | currency}}
+                                            </div>
+                                            <button id="{{p.id}}" data-name="{{p.name}}" data-price="{{p.price}}"
+                                                anh="image/{{p.id}}.jpg" class="add-to-cart btn btn-primary"
+                                                style="background-color: white;color:black; border-color:black">
+                                                Add to cart
+                                            </button>
+                                        </div>
+                                        <br>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <br>
+                
+                

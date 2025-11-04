@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Tuan</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/Products.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script src="js/layout.js"></script>
+   <script src="js/zoom.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <script src="js/angular.min.js"></script>
+</head>
+
+<body ng-app="myApp" ng-controller="productCtrl">
+
+    <div class="container-fluid">
+        <header class="row"> 
+            <div class="col-sm-4">
+                <img src="image/logo1.jpg" width="550px" height="350px" alt="">
+            </div>
+            <div class="col-sm-8 shopping-mall">
+                <h1>TUAN SHOP</h1>
+                <h4> Leading perfume distribution system for consumers</h4>
+                <br>
+                <img src="image/logo2.png" width="800px" height="150px" alt="">
+            </div>
+            
+        </header>
+        <!--Menu-->
+        <div ng-include="'menu1.html'"></div>
+        <!--Menu-->
+
+        <!--banner-->
+        <div ng-include="'banner.html'"></div>
+        <!--banner-->
+
+         
+        <div class="row">
+            <article class="col-sm-10">
+                 <!--nội dung-->
+                <div ng-showw="loading" class="pull-right label label-info">Loading...</div>   
+                <ng-view></ng-view>
+                 <!--nội dung-->
+            </article>
+             
+            <aside class="col-sm-2">
+                <!--cart-->
+                <div ng-include="'cart.html'"></div>
+                <!--cart-->
+                                      
+            </aside>
+
+        </div>
+        <!-- Banner phụ -->
+        <div ng-include="'bannerphu.html'"></div>
+         <!-- Banner phụ -->
+
+         <!--gianhang-->
+        
+         <div ng-include="'gianhang.html'"></div>
+       
+        
+        <!--gianhang-->
+        <br>
+        <img src="image/logo7.png" alt="" width="100%">
+        
+        <div class="container-fluid" style="background-color: #c0c0c0; height: 80px;">
+            <div class="row">
+                <div class="col-md-10 before-footer-cart">
+                    <i class="glyphicon glyphicon-earphone"></i>
+                    <span class="text-center">Hỗ trợ / Mua hàng: Từ thứ Hai đến thứ Bảy (08:00 - 17:00) Chủ nhật (08:00
+                        -
+                        12:00)</span>
+                    <a href="tel:19001208" rel="nofollow"> 19001208 </a>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div ng-include="'footer.html'"></div>
+            
+        </footer>
+    </div>
+    
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="js/cart.js"></script>
+</body>
+<script>
+    var danhSachSanPham = localStorage.getItem('ListProducts');
+    var ListProducts = JSON.parse(danhSachSanPham);
+
+    var HTML = ConvertListProDuctsToHTML(ListProducts);
+
+    var nodeProducts = document.getElementById('products');
+    nodeProducts.innerHTML = HTML;
+</script>
+
+
+</html>

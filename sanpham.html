@@ -1,0 +1,53 @@
+<hr>
+<img src="image/b4.jpg" alt="" width="100%" ;>
+<hr>
+<div class="image-container text-center" style="border: 5px solid white;padding: 20px;">
+    <div class="image-zoom" onmouseover="zoomIn(this)" onmouseout="zoomOut(this)">
+        <img src="image/a1.jpg" alt="Image 1">
+
+    </div>
+    <div class="image-zoom" onmouseover="zoomIn(this)" onmouseout="zoomOut(this)">
+        <img src="image/a2.jpg" alt="Image 2">
+
+    </div>
+    <div class="image-zoom" onmouseover="zoomIn(this)" onmouseout="zoomOut(this)">
+        <img src="image/a3.jpg" alt="Image 3">
+
+    </div>
+</div>
+<hr>
+<br>
+<div class="custom-border">
+    <div ng-controller="productCtrl">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-sm-4" ng-repeat="p in list_sanpham_chinh">
+                    <div class="card">
+
+                        <div class="card-header">
+                            {{p.name}}
+                        </div>
+                        <div class="card-body" ng-click="selectProduct(p, $index)">
+                            <a href="ProductDetailsPopMart.html?index=${{selectedProductIndex}}"><img
+                                    class="card-img-top" src="image/{{p.id}}.jpg" alt="Card image" width="220px"
+                                    height="280px"></a>
+
+                        </div>
+                        <div class="card-footer">
+                            {{p.price | currency}}
+                        </div>
+                        <button id="{{p.id}}" data-name="{{p.name}}" data-price="{{p.price}}" anh="image/{{p.id}}.jpg"
+                            class="add-to-cart btn btn-primary"
+                            style="background-color: white;color:black; border-color:black">
+                            Add to cart
+                        </button>
+                    </div>
+                    <br>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>

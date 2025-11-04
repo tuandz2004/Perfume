@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Tuan</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/border.css">
+    <script src="js/agular.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+</head>
+  <body ng-app="myApp" ng-controller="viewCtrl" style="background-color: bisque;">
+    
+      <div class="container">
+        <div class="custom-border" style="border: 2px solid black;padding: 20px;">
+        <div class="row" >
+            <div class="col-sm-6 offset-sm-3">
+                <form  name="frmBonus">
+                    <div class="form-group">
+                        <label for="my-input">Hình</label>
+                        <input  class="form-control" ng-model="sanpham.anh" required type="text" name="txtHinh">
+                        <label ng-show="frmBonus.txtHinh.$invalid" class="alert alert-danger">Bạn chưa nhập hình </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="my-input">Tên SP</label>
+                        <input ng-model="sanpham.Ten" class="form-control" required type="text" name="txttensp">
+                        <label ng-show="frmBonus.txttensp.$invalid" class="alert alert-danger">Bạn chưa nhập tên SP</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="my-input">Số Lượng</label>
+                        <input ng-model="sanpham.SoLuong" class="form-control" required type="text" name="txtSoLuong">
+                        <label ng-show="frmBonus.txtSoLuong.$invalid" class="alert alert-danger">Bạn chưa nhập số lượng</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="my-input">Đã bán</label>
+                        <input ng-model="sanpham.Ban" class="form-control" required type="text" name="txtban">
+                        <label ng-show="frmBonus.txtban.$invalid" class="alert alert-danger">Bạn chưa nhập số lượng bán</label>
+                    </div>
+                    <button ng-click="save()"  class="btn btn-primary" type="button" 
+                    style="background-color: gray; border-color: gray;">Thêm</button>
+                    <button ng-click="update()"ng-disabled="index == -1" class="btn btn-primary" type="button"
+                    style="background-color: gray; border-color: gray;">Sửa</button>
+                    <button ng-click="delete()" ng-disabled="index == -1" class="btn btn-primary" type="button"
+                    style="background-color: gray; border-color: gray;">Xóa</button>
+                    <button ng-click="cancel()" class="btn btn-primary" type="button"
+                    style="background-color: gray; border-color: gray;">Hủy</button>
+                    <button ng-click="clear()" class="btn btn-primary" type="button"
+                    style="background-color: gray; border-color: gray;">Mới</button>
+                  <a href="index.html"> <button type="button" class="btn btn-primary" >Trang chủ</button> </a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <form class="d-flex" role="search">
+        <input type="search" class="form-control" placeholder="Nhập tên nước hoa"
+        aria-label="Search" ng-model="timkiem"
+            style="width: 90%;">
+       
+    </form>
+        <hr>
+        <div class="row"  style="border: 1px solid black;" >
+          
+                <table class="table table-bordered" >
+                    <tbody>
+                        <tr>
+                            <td>Hình</td>
+                            <td><a href="#" ng-click="sortBy('Ten')">Tên</a></td>
+                            <td><a href="#" ng-click="sortBy('SoLuong')">Số lượng</a></td>
+                            <td><a href="#" ng-click="sortBy('Ban')">Đã bán</a></td>
+                            <td>Hàng tồn</td>
+                            <td>Action</td>
+                        </tr>
+                        <tr ng-repeat="st in list_sanpham| orderBy:prop | limitTo:8:begin | filter: {Ten: timkiem}">
+                            <td><img src="{{st.anh}}" width="50" alt="" ></td>
+                            <td>{{st.Ten| uppercase}}</td>
+                            <td>{{st.SoLuong}}</td>
+                            <td>{{st.Ban}}</td>
+                            <td>{{(1-st.Ban/st.SoLuong) |percentage:2}} </td>
+                            <td>
+                                <a href="#" ng-click="edit($index)">Sửa</a></td>
+                        </tr>
+                       
+                    </tbody>
+                </table>
+           
+        </div>
+        <div class="card-footer text-center">
+            <button class="btn btn-primary" ng-click="first()">
+                <span class="glyphicon glyphicon-hand-up icon"  ></span>
+            </button>
+            <button class="btn btn-info" ng-click="back()">
+                <span class="glyphicon glyphicon-hand-left icon" ></span>
+            </button>
+            <button class="btn btn-info"ng-click="next()">
+                <span class="glyphicon glyphicon-hand-right icon" ></span>
+            </button>
+            <button class="btn btn-primary" ng-click="last()">
+                <span class="glyphicon glyphicon-hand-down icon"></span>
+            </button>
+        </div>
+      </div>
+    
+      <script>
+        var app= angular.module("myApp",[]);
+        app.controller("viewCtrl",function($scope){
+            $scope.sanpham={};
+            $scope.index=-1;
+            $scope.save=function(){
+                $scope.list_sanpham.push(angular.copy($scope.sanpham));
+            }
+            $scope.edit=function(index){
+                $scope.index=index;
+                $scope.sanpham=angular.copy($scope.list_sanpham[index]);
+            }
+            $scope.update=function(){
+                $scope.list_sanpham[$scope.index]=angular.copy($scope.sanpham);
+                $scope.clear();
+            }
+            $scope.delete=function(){
+                $scope.list_sanpham.splice($scope.index,1);
+                $scope.clear();
+            }
+            $scope.clear=function(){
+                $scope.sanpham={};
+            }
+            $scope.cancel=function(){
+                if($scope.index==-1){
+                    $scope.clear();
+                } else {
+                    $scope.edit($scope.index);
+                }
+            }
+            
+            $scope.$parent.list_sanpham=[
+                {
+                    anh:"image/h1.jpg",
+                    Ten:"King",
+                    SoLuong:200,
+                    Ban:120
+                },
+                {
+                    anh:"image/h2.jpg",
+                    Ten:"Giò",
+                    SoLuong:300,
+                    Ban:150
+                },
+                {
+                    anh:"image/h3.jpg",
+                    Ten:"Goodgirl",
+                    SoLuong:500,
+                    Ban:100
+                },
+                {
+                    anh:"image/h4.jpg",
+                    Ten:"Luxury",
+                    SoLuong:450,
+                    Ban:200
+                },
+                {
+                    anh:"image/h5.jpg",
+                    Ten:"Sexy",
+                    SoLuong:700,
+                    Ban:637
+                },
+                {
+                    anh:"image/h6.jpg",
+                    Ten:"Charme",
+                    SoLuong:800,
+                    Ban:700
+                },
+                {
+                    anh:"image/h7.jpg",
+                    Ten:"Vescara",
+                    SoLuong:360,
+                    Ban:280
+                },
+                {
+                    anh:"image/h8.jpg",
+                    Ten:"Sauvage",
+                    SoLuong:600,
+                    Ban:450
+                },
+                {
+                    anh:"image/h9.jpg",
+                    Ten:"CoCo",
+                    SoLuong:450,
+                    Ban:200
+                },
+                {
+                    anh:"image/h10.jpg",
+                    Ten:"Roja",
+                    SoLuong:250,
+                    Ban:200
+                },
+                {
+                    anh:"image/h11.jpg",
+                    Ten:"Scandal",
+                    SoLuong:950,
+                    Ban:830
+                },
+                {
+                    anh:"image/h12.jpg",
+                    Ten:"Body yellow",
+                    SoLuong:350,
+                    Ban:200
+                },
+                {
+                    anh:"image/h13.jpg",
+                    Ten:"Violon",
+                    SoLuong:250,
+                    Ban:222
+                },
+                {
+                    anh:"image/h14.jpg",
+                    Ten:"Paco Phantom",
+                    SoLuong:750,
+                    Ban:368
+                },
+                {
+                    anh:"image/h15.jpg",
+                    Ten:"Untol",
+                    SoLuong:450,
+                    Ban:200
+                },
+                {
+                    anh:"image/h16.jpg",
+                    Ten:"Cherry Blossom",
+                    SoLuong:630,
+                    Ban:500
+                },
+                {
+                    anh:"image/h17.jpg",
+                    Ten:"SecRow",
+                    SoLuong:350,
+                    Ban:280
+                },
+                {
+                    anh:"image/h18.jpg",
+                    Ten:"Sauve",
+                    SoLuong:700,
+                    Ban:600
+                },
+                {
+                    anh:"image/h19.jpg",
+                    Ten:"FrenchKiss",
+                    SoLuong:950,
+                    Ban:756
+                },
+                {
+                    anh:"image/h20.jpg",
+                    Ten:"Pink",
+                    SoLuong:550,
+                    Ban:469
+                },
+                {
+                    anh:"image/logo1.jpg",
+                    Ten:"Mon",
+                    SoLuong:1000,
+                    Ban:958
+                }
+             
+                
+            ]
+            $scope.prop = "name";
+            $scope.sortBy=function(prop){
+                $scope.prop=prop;
+            }
+            $scope.begin=0;
+            $scope.pageCount=Math.ceil($scope.list_sanpham.length/8);
+            $scope.last=function(){
+                $scope.begin=($scope.pageCount-1)*8;
+            }
+            $scope.first=function(){
+                $scope.begin=0;
+            }
+            $scope.next=function(){
+                if($scope.begin < ($scope.pageCount-1)*8){
+                    $scope.begin+=8;
+                }
+            }
+            $scope.back=function(){
+                if($scope.begin > 0){
+                    $scope.begin-=8;
+                }
+            }
+        });
+        app.filter('percentage', function($filter){
+            return function(input,decimals){
+                return $filter('number')(input*100,decimals)+ '%';
+            }
+        });
+       
+      </script>
+      
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html> 
